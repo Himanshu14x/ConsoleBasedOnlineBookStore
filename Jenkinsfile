@@ -7,24 +7,15 @@ pipeline {
     }
 
     stages {
-		stage('Checkout') {
+		stage('Build') {
 			steps {
-				git branch: 'main',
-            url: 'https://github.com/Himanshu14x/ConsoleBasedOnlineBookStore.git',
-            credentialsId: 'github-creds'
-    		}
-		}
-
-
-        stage('Build') {
-			steps {
-				sh 'mvn clean package'
+				bat 'mvn clean package -DskipTests'
             }
         }
 
         stage('Test') {
 			steps {
-				sh 'mvn test'
+				bat 'mvn test'
             }
             post {
 				always {
@@ -42,10 +33,10 @@ pipeline {
 
     post {
 		success {
-			echo 'Build & Test succeeded!'
+			echo '✅ Build & Test succeeded!'
         }
         failure {
-			echo 'Build failed. Check logs.'
+			echo '❌ Build failed. Check logs.'
         }
     }
 }
