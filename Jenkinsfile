@@ -1,48 +1,51 @@
 pipeline {
-    agent any
+	agent any
 
     tools {
-        jdk 'jdk21'
+		jdk 'jdk21'
         maven 'maven-3.9'
     }
 
     stages {
-        stage('Checkout') {
-            steps {
-                git branch: 'main', url: 'https://github.com/Himanshu14x/ConsoleBookstore.git'
-            }
-        }
+		stage('Checkout') {
+			steps {
+				git branch: 'main',
+            url: 'https://github.com/Himanshu14x/ConsoleBasedOnlineBookStore.git',
+            credentialsId: 'github-creds'
+    		}
+		}
+
 
         stage('Build') {
-            steps {
-                sh 'mvn clean package'
+			steps {
+				sh 'mvn clean package'
             }
         }
 
         stage('Test') {
-            steps {
-                sh 'mvn test'
+			steps {
+				sh 'mvn test'
             }
             post {
-                always {
-                    junit 'target/surefire-reports/*.xml'
+				always {
+					junit 'target/surefire-reports/*.xml'
                 }
             }
         }
 
         stage('Archive') {
-            steps {
-                archiveArtifacts artifacts: 'target/*-shaded.jar', fingerprint: true
+			steps {
+				archiveArtifacts artifacts: 'target/*-shaded.jar', fingerprint: true
             }
         }
     }
 
     post {
-        success {
-            echo 'Build & Test succeeded!'
+		success {
+			echo 'Build & Test succeeded!'
         }
         failure {
-            echo 'Build failed. Check logs.'
+			echo 'Build failed. Check logs.'
         }
     }
 }
