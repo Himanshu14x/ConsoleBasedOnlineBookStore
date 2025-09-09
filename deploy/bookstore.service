@@ -1,0 +1,15 @@
+[Unit]
+Description=Bookstore Java Service
+After=network.target
+
+[Service]
+User=ubuntu
+WorkingDirectory=/home/ubuntu/apps
+ExecStart=/usr/bin/java -jar /home/ubuntu/apps/bookstore-1.0-SNAPSHOT-shaded.jar
+SuccessExitStatus=143
+Restart=on-failure
+RestartSec=5
+Environment=JAVA_OPTS=
+
+[Install]
+WantedBy=multi-user.target

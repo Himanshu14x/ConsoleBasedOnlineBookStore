@@ -1,0 +1,22 @@
+@startuml
+left to right direction
+actor Customer
+
+rectangle "Bookstore System" {
+  Customer --> (Register)
+  Customer --> (Login)
+  Customer --> (Search Book)
+  Customer --> (View Book Details)
+  Customer --> (Add to Cart)
+  Customer --> (View Cart)
+  Customer --> (Checkout / Pay)
+  Customer --> (View Recent Books)
+  Customer --> (View Recommended Books)
+  Customer --> (View Orders)
+  Customer --> (Logout)
+}
+
+(View Book Details) .> (Search Book) : <<extend>>
+(Checkout / Pay) .> (View Cart) : <<include>>
+
+@enduml

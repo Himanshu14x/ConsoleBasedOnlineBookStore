@@ -1,0 +1,55 @@
+@startuml
+title Bookstore - Class Diagram
+
+class Book {
+  - String id
+  - String title
+  - String author
+  - String genre
+  - double rating
+  - double price
+}
+
+class User {
+  - String userId
+  - String name
+  - String password
+  - List<String> recentBooks
+}
+
+class Cart {
+  - String userId
+  - List<CartItem> items
+  + double getSubtotal()
+}
+
+class CartItem {
+  - String bookId
+  - String title
+  - double price
+  - int quantity
+}
+
+class Order {
+  - String orderId
+  - String userId
+  - List<OrderItem> items
+  - double totalPrice
+  - java.time.Instant createdAt
+}
+
+class OrderItem {
+  - String bookId
+  - String title
+  - double price
+  - int quantity
+}
+
+User "1" -- "1" Cart : owns >
+Cart "1" -- "0..*" CartItem
+Order "1" -- "0..*" OrderItem
+User "1" -- "0..*" Order : places >
+Book "1" <-- "0..*" CartItem
+Book "1" <-- "0..*" OrderItem
+
+@enduml

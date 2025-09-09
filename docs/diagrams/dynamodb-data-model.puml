@@ -1,0 +1,43 @@
+@startuml
+title DynamoDB Data Model - Bookstore
+
+entity "Books" as Books {
+  * bookId : String <<PK>>
+  --
+  title : String
+  author : String
+  genre : String
+  rating : Number
+  price : Number
+}
+
+entity "Users" as Users {
+  * userId : String <<PK>>
+  --
+  name : String
+  password : String
+  recentBooks : List<String>
+}
+
+entity "Orders" as Orders {
+  * orderId : String <<PK>>
+  --
+  userId : String
+  totalPrice : Number
+  items : List<Map>
+  createdAt : String
+  GSI: userId-index (userId -> orderId)
+}
+
+entity "Counters" as Counters {
+  * counterId : String <<PK>>
+  --
+  seq : Number
+}
+
+' Relationships (conceptual, not enforced by Dynamo)
+Users ||--o{ Orders : places >
+Users ||--o{ recentBooks : viewed >
+Orders ||--o{ Books : contains >
+Users ||--|| Counters : generates orderIds >
+@enduml

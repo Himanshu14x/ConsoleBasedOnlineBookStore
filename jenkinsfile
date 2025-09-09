@@ -1,0 +1,8 @@
+pipeline {
+  agent any
+  stages {
+    stage('Checkout') { steps { checkout scm } }
+    stage('Build & Test') { steps { sh 'mvn -B clean test package' } }
+    stage('Archive') { steps { archiveArtifacts artifacts: 'target/*-shaded.jar', fingerprint: true } }
+  }
+}
