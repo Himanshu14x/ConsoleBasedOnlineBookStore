@@ -23,6 +23,12 @@ pipeline {
                 }
             }
         }
+        stage('Debug Artifacts') {
+			steps {
+				bat 'dir target'
+		    }
+		}
+
 
         stage('Archive') {
 			steps {
