@@ -1,15 +1,17 @@
 [Unit]
-Description=Bookstore Java Service
+Description=Bookstore Console App
 After=network.target
 
 [Service]
 User=ubuntu
-WorkingDirectory=/home/ubuntu/apps
-ExecStart=/usr/bin/java -jar /home/ubuntu/apps/bookstore-1.0-SNAPSHOT-shaded.jar
-SuccessExitStatus=143
+Group=ubuntu
+WorkingDirectory=/opt/bookstore
+ExecStart=/usr/bin/java -Xms128m -Xmx512m -jar /opt/bookstore/bookstore.jar
 Restart=on-failure
 RestartSec=5
-Environment=JAVA_OPTS=
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=bookstore
 
 [Install]
 WantedBy=multi-user.target
