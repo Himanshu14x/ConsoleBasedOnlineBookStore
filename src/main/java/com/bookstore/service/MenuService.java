@@ -146,7 +146,7 @@ public class MenuService {
                 if ("3".equals(c)) { System.out.println("logged out successfully"); currentUser = null; return; }
                 else { System.out.println("invalid input"); continue; }
             } else {
-                // We're inside the found-books options. Keep showing options until user chooses to return or logout.
+
                 boolean inFoundMenu = true;
                 while (inFoundMenu) {
                     System.out.println("Found books:");
@@ -166,11 +166,11 @@ public class MenuService {
                         int num = ConsoleUtil.readIntSafe();
                         if (num == Integer.MIN_VALUE || num < 1 || num > found.size()) {
                             System.out.println("invalid input");
-                            // continue showing the found-books menu (do NOT exit)
+
                             continue;
                         }
                         Book sel = found.get(num - 1);
-                        // add to recent books (persisted in Dynamo if enabled)
+
                         if (currentUser != null) {
                             try { userDao.addRecentBook(currentUser.getUserId(), sel.getId()); } catch (Exception ignored) {}
                         }
@@ -185,16 +185,16 @@ public class MenuService {
                         if ("1".equals(v)) {
                             cartService.add(sel);
                             System.out.println("book has been added to cart.");
-                            return; // after add, return to home menu
+                            return;
                         } else {
-                            // return to the found-books menu
+
                             continue;
                         }
                     } else if ("2".equals(opt)) {
-                        // go back to outer search loop (search again)
-                        inFoundMenu = false; // will break inner loop and allow outer while to prompt search again
+
+                        inFoundMenu = false;
                     } else if ("3".equals(opt)) {
-                        // return to previous (home) menu
+
                         return;
                     } else if ("4".equals(opt)) {
                         System.out.println("logged out successfully");
@@ -202,10 +202,10 @@ public class MenuService {
                         return;
                     } else {
                         System.out.println("invalid input");
-                        // continue showing the found-books menu
+
                     }
-                } // end inFoundMenu loop
-                // if we reach here it means user chose "2" -> search again
+                }
+
                 continue;
             }
         }

@@ -75,12 +75,11 @@ public class DynamoBookDao implements BookDao {
 
     @Override
     public void seedDemoBooks() {
-        // keep this for compatibility but prefer to run the BookSeeder which writes to Dynamo
-        // Here we do nothing (or could call BookSeeder programmatically)
+
         System.out.println("DynamoBookDao.seedDemoBooks: Use BookSeeder to populate the Books table.");
     }
 
-    // helper to convert Dynamo item to Book
+
     private Book fromItem(Map<String, AttributeValue> item) {
         try {
             String id = item.getOrDefault("bookId", AttributeValue.builder().s("").build()).s();
